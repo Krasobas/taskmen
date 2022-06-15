@@ -1,11 +1,9 @@
 package com.krasobas.task_manager.controllers;
 
 import com.krasobas.task_manager.dao.UserDAO;
-import com.krasobas.task_manager.models.Task;
 import com.krasobas.task_manager.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,8 +19,6 @@ public class UsersController {
     public UsersController(UserDAO users) {
         this.users = users;
     }
-//    /users/login
-//    /users/new
 
     @GetMapping()
     public String singIn(@ModelAttribute("user") User user) {
@@ -52,7 +48,6 @@ public class UsersController {
     @GetMapping("/exit")
     public String exit(HttpSession httpSession) {
         httpSession.removeAttribute("user");
-//        httpSession.setAttribute("user", null);
         return "redirect:/";
     }
 }
