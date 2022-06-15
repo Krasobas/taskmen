@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/outer_pages :: html_head ('Sing in')">
+    <title></title>
+</head>
+<body>
+<div class="wrapper">
+    <header class="header" th:fragment="header">
+        <div class="container">
+            <div class="header_body">
+                <div class="header_logo">
+                    <a th:href="@{/tasks}" class="user_logo">
+                        <img src="" alt="logo">
+                    </a>
+                    <div class="default_logo">
+                        <a th:href="@{/tasks}" class="fa-solid fa-check-double">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main class="page">
+        <div class="container">
+            <form th:method="POST" th:action="@{/users}" th:object="${user}">
+                <div class="white-box">
+                    <div class="task_body">
+                        <h3>Sing in</h3>
+                        <div class="task_title__input countable">
+                            <div class="text-field text-field_floating">
+                                <input class="text-field__input" type="text" name="user_login" th:field="*{login}" id="login" placeholder="What is your login?" maxlength="10"/>
+                                <label class="text-field__label" for="login">Login</label>
+                            </div>
+                            <div class="text-field__counter"></div>
+                            <div class="input_error" th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Login title</div>
+                        </div>
+                        <div class="task_content__input countable">
+                            <div class="text-field text-field_floating">
+                                <input class="text-field__input" type="password" name="user_password" th:field="*{password}" id="password" placeholder="What is your password?" maxlength="10"/>
+                                <label class="text-field__label" for="password">Password</label>
+                            </div>
+                            <div class="text-field__counter"></div>
+                            <div class="input_error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Error password</div>
+                        </div>
+                    </div>
+                    <a class="icons fa-solid fa-xmark cancel_icon" th:href="@{/}"></a>
+                    <input class="btn btn_green" type="submit" value="Sing in"/>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer th:replace="templates/outer_pages :: footer"></footer>
+</div>
+<script th:replace="templates/outer_pages :: jquery"></script>
+<script th:replace="templates/outer_pages :: js"></script>
+</body>
+</html>

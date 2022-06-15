@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/outer_pages :: html_head ('Welcome!')">
+    <title></title>
+</head>
+<body>
+<div class="wrapper">
+    <header th:replace="templates/outer_pages :: header"></header>
+    <main class="page">
+        <div class="container">
+            <div class="white-box welcome_box">
+                <div class="default_logo logo_box">
+                    <span class="fa-solid fa-check-double"></span>
+                </div>
+                <span class="greeting">Welcome to taskmen!</span>
+                <a th:href="@{/users/demo}" class="white-box clickable btn_add">Demo</a>
+                <a th:href="@{/users}" class="white-box clickable btn_green btn_add">Sing in</a>
+                <a th:href="@{/users/new}" class="white-box clickable btn_yellow btn_add">Sing up</a>
+            </div>
+
+
+        </div>
+    </main>
+    <footer th:replace="templates/outer_pages :: footer"></footer>
+</div>
+<script th:replace="templates/outer_pages :: jquery"></script>
+<script th:replace="templates/outer_pages :: js"></script>
+</body>
+</html>

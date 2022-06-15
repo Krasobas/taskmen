@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="html_head (title)">
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+    <link rel="stylesheet" href="/resources/css/style.css">
+    <link rel="stylesheet" href="/resources/css/icons.css">
+    <meta name="viewport" content="width=device-width">
+</head>
+<body>
+<div class="wrapper">
+    <header class="header" th:fragment="header">
+        <div class="container">
+            <div class="header_body">
+                <div class="header_logo">
+                    <a th:href="@{/}" class="user_logo">
+                        <img src="" alt="logo">
+                    </a>
+                    <div class="default_logo">
+                        <a th:href="@{/}" class="fa-solid fa-check-double">
+                        </a>
+                    </div>
+                </div>
+                <div class="header_burger">
+                    <span></span>
+                </div>
+                <nav class="header_menu">
+                    <ul class="header_list">
+                        <li><a class="header_link" th:href="@{/}">About</a></li>
+                        <li><a class="header_link" th:href="@{/}">Download</a></li>
+                        <li><a class="header_link" th:href="@{/}">Contacts</a></li>
+                        <li><a class="header_link" th:href="@{/}">Language</a></li>
+                        <li><a class="header_link" th:href="@{/users/exit}">Exit</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main class="page">
+        <div class="container"></div>
+    </main>
+    <footer class="footer" th:fragment="footer">
+        <div class="container">
+            <div class="social">
+                <!--                <a href="" class="fa-solid fa-at" target="_blank"></a>-->
+                <a href="mailto:vasiliy.krasov@gmail.com" class="fa-solid fa-envelope" target="_blank"></a>
+                <a href="https://www.linkedin.com/in/krasobas/" class="fab fa-linkedin" target="_blank"></a>
+                <!--                <a href="" class="fab fa-linkedin-in" target="_blank"></a>-->
+                <a href="https://github.com/Krasobas" class="fab fa-github" target="_blank"></a>
+                <a href="https://t.me/krasobas" class="fab fa-telegram" target="_blank"></a>
+            </div>
+        </div>
+    </footer>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" th:fragment="jquery"></script>
+<script src="/resources/js/script.js" th:fragment="js"></script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+Z-INDEXES
+
+//плашка
+header:before 3
+//текст меню
+header_list 3
+//лого
+header_logo 3
+//три полоски
+header_burger 4
+//фон
+header_menu 2
+//содежимое страницы
+page 1
+//подвал
+footer 2

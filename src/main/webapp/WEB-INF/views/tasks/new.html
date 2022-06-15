@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/inner_pages :: html_head ('New task')">
+    <title></title>
+</head>
+<body>
+<div class="wrapper">
+    <header th:replace="templates/inner_pages :: header"></header>
+    <main class="page">
+        <div class="container">
+            <form th:method="POST" th:action="@{/tasks}" th:object="${task}">
+                <div class="white-box">
+                    <div class="task_body">
+                        <h3>New task</h3>
+                        <div class="task_title__input countable">
+                            <div class="text-field text-field_floating">
+                                <input class="text-field__input" type="text" name="task_title" maxlength="50" th:field="*{title}" id="title" placeholder="What do you want to do?"/>
+                                <label class="text-field__label" for="title">Title</label>
+                            </div>
+                            <div class="text-field__counter"></div>
+                            <div class="input_error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Error title</div>
+                        </div>
+                        <div class="task_content__input countable">
+                            <div class="text-field text-field_floating">
+                                <textarea class="text-field__input" name="content" maxlength="500" th:field="*{content}" id="content" placeholder="How will you do it?"></textarea>
+                                <label class="text-field__label task-content__label" for="content">Content</label>
+                            </div>
+                            <div class="text-field__counter"></div>
+                            <div class="input_error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}">Error content</div>
+                        </div>
+                    </div>
+                    <a class="icons fa-solid fa-xmark cancel_icon" th:href="@{/tasks}"></a>
+                    <input class="btn btn_green" type="submit" value="Create"/>
+                </div>
+            </form>
+        </div>
+    </main>
+    <footer th:replace="templates/inner_pages :: footer"></footer>
+</div>
+<script th:replace="templates/inner_pages :: jquery"></script>
+<script th:replace="templates/inner_pages :: js"></script>
+</body>
+</html>

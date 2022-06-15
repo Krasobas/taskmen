@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="templates/inner_pages :: html_head ('Main')">
+    <title></title>
+</head>
+<body>
+<div class="wrapper">
+    <header th:replace="templates/inner_pages :: header"></header>
+    <main class="page">
+        <div class="container">
+            <div th:classappend="${task.isStatus} ? status_done : ''" class="white-box clickable" th:each="task : ${tasks}">
+                <span class="task_created" th:text="${task.getCreated()}">date</span>
+                <a th:classappend="${task.isStatus} ? fa-square-check : fa-square" th:href="@{/tasks/{id}/done(id=${task.getId})}" class="icons fa-regular done_icon"></a>
+                <a th:href="@{/tasks/{id}(id=${task.getId()})}"
+                   th:text="${task.title}">user</a>
+                <span class="dots-menu_icon icons fa-solid fa-ellipsis"></span>
+                <div class="dots-menu_hidden">
+                    <a class="icons fa-solid fa-pencil edit_icon" th:href="@{/tasks/{id}/edit(id=${task.getId})}"></a>
+                    <form th:method="DELETE" th:action="@{/tasks/{id}(id=${task.getId})}">
+                        <button type="submit" class="icons fa-solid fa-trash delete_icon"></button>
+                    </form>
+                </div>
+            </div>
+            <a href="/tasks/new" class="white-box clickable btn_green btn_add">New task</a>
+            <div class="archive"></div>
+        </div>
+    </main>
+    <footer th:replace="templates/inner_pages :: footer"></footer>
+</div>
+<script th:replace="templates/inner_pages :: jquery"></script>
+<script th:replace="templates/inner_pages :: js"></script>
+</body>
+</html>
