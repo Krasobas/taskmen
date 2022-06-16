@@ -71,14 +71,12 @@
       <version>4.0.1</version>
       <scope>provided</scope>
     </dependency>
-
     <!-- hibernate-validator -->
     <dependency>
       <groupId>org.hibernate.validator</groupId>
       <artifactId>hibernate-validator</artifactId>
       <version> 6.2.0.Final</version>
     </dependency>
-
     <!-- postgresql -->
     <dependency>
       <groupId>org.postgresql</groupId>
@@ -91,7 +89,6 @@
       <artifactId>spring-jdbc</artifactId>
       <version>5.3.20</version>
     </dependency>
-
     <!-- thymeleaf-extras-java8time -->
     <dependency>
       <groupId>org.thymeleaf.extras</groupId>
@@ -137,6 +134,7 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <!--maven-dependency-plugin (heroku uses it for deploy)-->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-dependency-plugin</artifactId>
