@@ -8,10 +8,11 @@
     <header th:replace="templates/outer_pages :: header"></header>
     <main class="page">
         <div class="container">
-            <form th:method="POST" th:action="@{/users}" th:object="${user}">
+            <form th:method="POST" th:action="@{/users/new}" th:object="${user}">
                 <div class="white-box">
                     <div class="task_body">
                         <h3>Sing up</h3>
+                        <p th:text="${user_login_exist}" style="color:indianred; margin-bottom: 10px"></p>
                         <div class="task_title__input countable">
                             <div class="text-field text-field_floating">
                                 <input class="text-field__input" type="text" name="user_login" th:field="*{login}" id="login" placeholder="What is your login?" maxlength="10"/>

@@ -19,6 +19,7 @@ public class User {
     @Size(min=5, max=10, message = "Password should be between 5 and 10 characters.")
     private String password;
     private DAO tasks;
+    private boolean status = false;
 
     public User(String login, String password) {
         this.tasks = new MemDAO();
@@ -59,6 +60,14 @@ public class User {
 
     public void setTasks(DAO tasks) {
         this.tasks = tasks;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override

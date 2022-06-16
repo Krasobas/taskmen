@@ -5,27 +5,14 @@
 </head>
 <body>
 <div class="wrapper">
-    <header class="header" th:fragment="header">
-        <div class="container">
-            <div class="header_body">
-                <div class="header_logo">
-                    <a th:href="@{/tasks}" class="user_logo">
-                        <img src="" alt="logo">
-                    </a>
-                    <div class="default_logo">
-                        <a th:href="@{/tasks}" class="fa-solid fa-check-double">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+    <header th:replace="templates/outer_pages :: header"></header>
     <main class="page">
         <div class="container">
             <form th:method="POST" th:action="@{/users}" th:object="${user}">
                 <div class="white-box">
                     <div class="task_body">
                         <h3>Sing in</h3>
+                        <p th:text="${user_not_found}" style="color:indianred; margin-bottom: 10px"></p>
                         <div class="task_title__input countable">
                             <div class="text-field text-field_floating">
                                 <input class="text-field__input" type="text" name="user_login" th:field="*{login}" id="login" placeholder="What is your login?" maxlength="10"/>

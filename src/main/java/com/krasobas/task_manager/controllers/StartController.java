@@ -10,7 +10,8 @@ import javax.servlet.http.HttpSession;
 public class StartController {
     @GetMapping("/")
     String main(HttpSession httpSession) {
-        if (httpSession.getAttribute("user") != null) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null && user.isStatus()) {
             return "redirect:/tasks";
         }
         return "index";

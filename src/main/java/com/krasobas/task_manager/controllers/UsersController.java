@@ -4,6 +4,7 @@ import com.krasobas.task_manager.dao.UserDAO;
 import com.krasobas.task_manager.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,14 @@ public class UsersController {
         this.users = users;
     }
 
+    @GetMapping("/demo")
+    public String demo(HttpSession httpSession) {
+        User demo = new User("demo", "demo");
+        demo.setStatus(true);
+        httpSession.setAttribute("user", demo);
+        return "redirect:/tasks";
+    }
+
     @GetMapping()
     public String singIn(@ModelAttribute("user") User user) {
         return "users/singin";
@@ -27,26 +36,51 @@ public class UsersController {
 
     @PostMapping()
     public String getUser(@ModelAttribute("user") @Valid User user,
-                          BindingResult bindingResult, HttpSession httpSession) {
+                          BindingResult bindingResult, HttpSession httpSession, Model model) {
         if (bindingResult.hasErrors()) {
             return "users/singin";
         }
-        if (users.checkUser(user)) {
-            httpSession.setAttribute("user", users.findUser(user));
-            return "redirect:/tasks";
+
+        if (!users.checkLogin(user.getLogin())) {
+            model.addAttribute("user_not_found", "There is no any user with such login.");
+            return "users/singin";
+        } else if (!users.checkPassword(user)) {
+            model.addAttribute("user_not_found", "Wrong password.");
+            return "users/singin";
         } else {
-            return "users/notfound";
+            User foundUser = users.findUser(user);
+            foundUser.setStatus(true);
+            httpSession.setAttribute("user", foundUser);
+            return "redirect:/tasks";
         }
     }
 
-    @GetMapping("/demo")
-    public String demo(HttpSession httpSession) {
-        httpSession.setAttribute("user", new User("demo", "demo"));
-        return "redirect:/tasks";
+    @GetMapping("/new")
+    public String singUp(@ModelAttribute("user") User user) {
+        return "users/singup";
+    }
+
+    @PostMapping("/new")
+    public String addUser(@ModelAttribute("user") @Valid User user,
+                          BindingResult bindingResult, HttpSession httpSession, Model model) {
+        if (bindingResult.hasErrors()) {
+            return "users/singup";
+        }
+        if (users.checkLogin(user.getLogin())) {
+            model.addAttribute("user_login_exist", "This login is already used. Please chose another one.");
+            return "users/singup";
+        } else {
+            User newUser = users.addUser(user);
+            newUser.setStatus(true);
+            httpSession.setAttribute("user", newUser);
+            return "redirect:/tasks";
+        }
     }
 
     @GetMapping("/exit")
     public String exit(HttpSession httpSession) {
+        User user = (User) httpSession.getAttribute("user");
+        user.setStatus(false);
         httpSession.removeAttribute("user");
         return "redirect:/";
     }

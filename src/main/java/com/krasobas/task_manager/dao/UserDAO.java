@@ -48,15 +48,26 @@ public class UserDAO {
         USERS.put(user2.getLogin(), user2);
     }
 
-    private boolean checkLogin(String login) {
+    public boolean checkLogin(String login) {
         return USERS.containsKey(login);
     }
 
-    public boolean checkUser(User user) {
-        return USERS.containsKey(user.getLogin())
-                && USERS.get(user.getLogin())
+    public boolean checkPassword(User user) {
+        return USERS.get(user.getLogin())
                 .getPassword()
                 .equals(user.getPassword());
+    }
+
+    public User addUser(User user) {
+        User toAdd = new User(
+                user.getLogin(),
+                user.getPassword()
+        );
+        USERS.put(
+                toAdd.getLogin(),
+                toAdd
+        );
+        return toAdd;
     }
 
     public User findUser(User user) {
