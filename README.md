@@ -2,7 +2,7 @@
 
 This project represent a Spring MVC application using a database.
 
-Your can try to use my app following this [link](https://taskmen-app.herokuapp.com/).
+![Website](https://img.shields.io/website?down_color=red&down_message=don%27t%20work&style=for-the-badge&up_message=taskmen-app.herokuapp.com&url=https%3A%2F%2Ftaskmen-app.herokuapp.com%2F).
 
 ---
 
