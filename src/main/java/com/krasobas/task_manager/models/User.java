@@ -1,10 +1,9 @@
 package com.krasobas.task_manager.models;
 
-import com.krasobas.task_manager.dao.oldDAO;
-import com.krasobas.task_manager.dao.TasksDAO;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
 public class User {
@@ -20,12 +19,12 @@ public class User {
     @Size(min=5, max=10, message = "Password should be between 5 and 10 characters.")
     private String password;
 
-    private oldDAO tasks;
+    private List<Task> tasks;
 
     private boolean status = false;
 
     public User(String login, String password) {
-        this.tasks = new TasksDAO();
+        this.tasks = new LinkedList<>();
         this.id = ++ID_GENERATOR;
         this.login = login;
         this.password = password;
@@ -57,11 +56,11 @@ public class User {
         this.password = password;
     }
 
-    public oldDAO getTasks() {
+    public List<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(oldDAO tasks) {
+    public void setTasks(List<Task> tasks) {
         this.tasks = tasks;
     }
 

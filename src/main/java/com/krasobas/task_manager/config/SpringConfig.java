@@ -1,4 +1,5 @@
 package com.krasobas.task_manager.config;
+import com.krasobas.task_manager.dao.tasks.CloudTaskDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
@@ -11,6 +12,12 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.sql.DataSource;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
 
 @Configuration
 @ComponentScan("com.krasobas.task_manager")
@@ -73,6 +80,23 @@ public class SpringConfig implements WebMvcConfigurer {
         dataSource.setUsername("postgres");
         dataSource.setPassword("password");
         return dataSource;
+    }
+
+    @Bean
+    public Connection jdbcConnection() {
+        Connection db = null;
+        try (InputStream in = CloudTaskDAO.class.getClassLoader().getResourceAsStream("app.properties")) {
+            Properties config = new Properties();
+            config.load(in);
+            Class.forName(config.getProperty("postgresql.driver-class-name"));
+            db = DriverManager.getConnection(
+                    config.getProperty("postgresql.url"),
+                    config.getProperty("postgresql.username"),
+                    config.getProperty("postgresql.password"));
+        } catch (IOException | ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        return db;
     }
 
     @Bean
