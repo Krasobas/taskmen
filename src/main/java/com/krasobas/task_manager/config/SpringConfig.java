@@ -97,7 +97,7 @@ public class SpringConfig implements WebMvcConfigurer {
     public Connection jdbcConnection() {
         Connection db = null;
         try {
-            Class.forName(driver);
+            Class.forName("org.postgresql.Driver");
 //            db = DriverManager.getConnection(url, username, password);
             db = DriverManager.getConnection(url);
 
