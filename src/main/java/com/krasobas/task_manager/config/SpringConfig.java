@@ -98,7 +98,9 @@ public class SpringConfig implements WebMvcConfigurer {
         Connection db = null;
         try {
             Class.forName(driver);
-            db = DriverManager.getConnection(url, username, password);
+//            db = DriverManager.getConnection(url, username, password);
+            db = DriverManager.getConnection(url);
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
