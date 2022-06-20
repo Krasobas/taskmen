@@ -1,6 +1,7 @@
 package com.krasobas.task_manager.config;
 import com.krasobas.task_manager.dao.tasks.CloudTaskDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -21,10 +22,20 @@ import java.util.Properties;
 
 @Configuration
 @ComponentScan("com.krasobas.task_manager")
+@PropertySource("classpath:application.properties")
 @EnableWebMvc
 public class SpringConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
+
+    @Value("${postgresql.driver-class-name}")
+    String driver;
+    @Value("${postgresql.url}")
+    String url;
+    @Value("${postgresql.username}")
+    String username;
+    @Value("${postgresql.password}")
+    String password;
 
     @Autowired
     public SpringConfig(ApplicationContext applicationContext) {
@@ -85,15 +96,10 @@ public class SpringConfig implements WebMvcConfigurer {
     @Bean
     public Connection jdbcConnection() {
         Connection db = null;
-        try (InputStream in = CloudTaskDAO.class.getClassLoader().getResourceAsStream("application.properties")) {
-            Properties config = new Properties();
-            config.load(in);
-            Class.forName(config.getProperty("postgresql.driver-class-name"));
-            db = DriverManager.getConnection(
-                    config.getProperty("postgresql.url"),
-                    config.getProperty("postgresql.username"),
-                    config.getProperty("postgresql.password"));
-        } catch (IOException | ClassNotFoundException | SQLException e) {
+        try {
+            Class.forName(driver);
+            db = DriverManager.getConnection(url, username, password);
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return db;
