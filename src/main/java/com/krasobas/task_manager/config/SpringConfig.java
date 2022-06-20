@@ -1,5 +1,4 @@
 package com.krasobas.task_manager.config;
-import com.krasobas.task_manager.dao.tasks.CloudTaskDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -13,12 +12,7 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Properties;
+import java.sql.*;
 
 @Configuration
 @ComponentScan("com.krasobas.task_manager")
@@ -86,10 +80,15 @@ public class SpringConfig implements WebMvcConfigurer {
     public Connection jdbcConnection() {
         Connection db = null;
         try {
-//            Class.forName("org.postgresql.Driver");
-//            db = DriverManager.getConnection(url, username, password);
-//            db = DriverManager.getConnection(url);
             db = dataSource().getConnection();
+            if (!checkTable(db, "users")) {
+                String sql = "create table users (id serial primary key, login varchar(255), password varchar(255))";
+                createTable(db, sql);
+            }
+            if (!checkTable(db, "tasks")) {
+                String sql = "create table tasks (id serial primary key, title varchar(255), content text, created timestamp, done boolean, user_id int references users(id))";
+                createTable(db, sql);
+            }
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -115,5 +114,29 @@ public class SpringConfig implements WebMvcConfigurer {
     @Bean
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
+    }
+
+    private boolean checkTable(Connection db, String table) {
+        boolean rsl = false;
+        String sql = "select exists (select 1 from information_schema.columns where table_name like ?)";
+        try (PreparedStatement ps = db.prepareStatement(sql)) {
+            ps.setString(1, table);
+            try (ResultSet rs = ps.executeQuery(sql)) {
+                if (rs.next()) {
+                    rsl = rs.getBoolean(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return rsl;
+    }
+
+    private void createTable(Connection db, String sql) {
+        try (Statement st = db.createStatement()) {
+            st.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
