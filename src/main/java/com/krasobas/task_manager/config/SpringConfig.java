@@ -82,29 +82,34 @@ public class SpringConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
     }
 
-    // подключаем Spring JDBC
-    @Bean
-    public DataSource dataSource() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName("org.postgresql.Driver");
-        dataSource.setUrl("jdbc:postgresql://localhost:5432/spring_mvc_db");
-        dataSource.setUsername("postgres");
-        dataSource.setPassword("password");
-        return dataSource;
-    }
-
     @Bean
     public Connection jdbcConnection() {
         Connection db = null;
         try {
 //            Class.forName("org.postgresql.Driver");
 //            db = DriverManager.getConnection(url, username, password);
-            db = DriverManager.getConnection(url);
+//            db = DriverManager.getConnection(url);
+            db = dataSource().getConnection();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return db;
+    }
+
+    // подключаем Spring JDBC
+    @Bean
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("org.postgresql.Driver");
+//        dataSource.setUrl("jdbc:postgresql://localhost:5432/spring_mvc_db");
+//        dataSource.setUsername("postgres");
+//        dataSource.setPassword("password");
+
+        dataSource.setUrl(System.getenv("JDBC_DATABASE_URL"));
+        dataSource.setUsername(System.getenv("JDBC_DATABASE_USERNAME"));
+        dataSource.setPassword(System.getenv("JDBC_DATABASE_PASSWORD"));
+        return dataSource;
     }
 
     @Bean
