@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.zip.DataFormatException;
 
 public class Task {
     private static int ID_GENERATOR = 0;
@@ -16,9 +15,10 @@ public class Task {
             DateTimeFormatter.ofPattern("EEEE, d MMMM 'at' HH:mm").withLocale(Locale.ENGLISH);
     private static final DateTimeFormatter TIME_FORMATTER =
             DateTimeFormatter.ofPattern("HH:mm");
+
     private LocalDateTime created = LocalDateTime.now().truncatedTo(ChronoUnit.MICROS);
     private int id;
-    private boolean status = false;
+    private boolean done = false;
 
     @NotEmpty(message = "Task title should not be empty.")
     @Size(min=2, max=50, message = "Task title should be between 2 and 50 characters.")
@@ -62,7 +62,7 @@ public class Task {
         this.title = title;
     }
 
-    public String getCreated() {
+    public String getCreatedAsString() {
         StringBuilder date = new StringBuilder();
         if (created.toLocalDate().isEqual(LocalDate.now())) {
             date.append("Today at ").append(created.format(TIME_FORMATTER));
@@ -74,16 +74,24 @@ public class Task {
         return date.toString();
     }
 
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
     public void setCreated(LocalDateTime created) {
         this.created = created;
     }
 
-    public boolean isStatus() {
-        return status;
+    public boolean isDone() {
+        return done;
     }
 
     public void setStatus() {
-        status = !status;
+        done = !done;
+    }
+
+    public void setStatus(boolean status) {
+        done = status;
     }
 
     @Override

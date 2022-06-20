@@ -1,28 +1,31 @@
 package com.krasobas.task_manager.models;
 
-import com.krasobas.task_manager.dao.DAO;
-import com.krasobas.task_manager.dao.MemDAO;
+import com.krasobas.task_manager.dao.oldDAO;
+import com.krasobas.task_manager.dao.TasksDAO;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Objects;
 
 public class User {
     private static int ID_GENERATOR = 0;
+
     private int id;
+
     @NotEmpty(message = "Login should not be empty.")
     @Size(min=5, max=10, message = "Login should be between 5 and 10 characters.")
     private String login;
+
     @NotEmpty(message = "Password should not be empty.")
     @Size(min=5, max=10, message = "Password should be between 5 and 10 characters.")
     private String password;
-    private DAO tasks;
+
+    private oldDAO tasks;
+
     private boolean status = false;
 
     public User(String login, String password) {
-        this.tasks = new MemDAO();
+        this.tasks = new TasksDAO();
         this.id = ++ID_GENERATOR;
         this.login = login;
         this.password = password;
@@ -54,11 +57,11 @@ public class User {
         this.password = password;
     }
 
-    public DAO getTasks() {
+    public oldDAO getTasks() {
         return tasks;
     }
 
-    public void setTasks(DAO tasks) {
+    public void setTasks(oldDAO tasks) {
         this.tasks = tasks;
     }
 

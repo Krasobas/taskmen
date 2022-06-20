@@ -9,14 +9,14 @@
     <main class="page">
         <div class="container">
             <div class="navigable">
-                <a th:href="@{/tasks/{id}/previous(id=${task.getId})}" class="icons previous_icon fa-solid fa-angles-left"></a>
-                <div th:classappend="${task.isStatus} ? done-box : ''" class="white-box">
+                <a th:href="@{/tasks/{id}/previous(id=${task.getId()})}" class="icons previous_icon fa-solid fa-angles-left"></a>
+                <div th:classappend="${task.done} ? done-box : ''" class="white-box">
                     <div class="task_body">
-                        <span class="task_created" th:text="${task.getCreated()}">date</span>
+                        <span class="task_created" th:text="${task.getCreatedAsString()}">date</span>
                         <h3 class="task_title" th:text="${task.getTitle()}">title</h3>
                         <p class="task_content" th:text="${task.getContent()}">Lorem ipsum dolor </p>
                     </div>
-                    <a th:classappend="${task.isStatus} ? fa-square-check : fa-square" th:href="@{/tasks/{id}/done(id=${task.getId})}" class="icons fa-regular done_icon"></a>
+                    <a th:classappend="${task.done} ? fa-square-check : fa-square" th:href="@{/tasks/{id}/done(id=${task.getId})}" class="icons fa-regular done_icon"></a>
                     <a class="icons fa-solid fa-pencil edit_icon" th:href="@{/tasks/{id}/edit(id=${task.getId})}"></a>
                     <a class="icons fa-solid fa-xmark cancel_icon" th:href="@{/tasks}"></a>
                     <form th:method="DELETE" th:action="@{/tasks/{id}(id=${task.getId})}">
@@ -25,8 +25,8 @@
                 </div>
                 <a th:href="@{/tasks/{id}/next(id=${task.getId})}" class="icons next_icon fa-solid fa-angles-right"></a>
             </div>
-            <a th:unless="${task.isStatus()}" th:href="@{/tasks/{id}/done(id=${task.getId})}" class="white-box clickable btn_green btn_add">Done</a>
-            <a th:if="${task.isStatus()}" th:href="@{/tasks/{id}/done(id=${task.getId})}" class="white-box clickable btn_yellow btn_add">Undone</a>
+            <a th:unless="${task.isDone()}" th:href="@{/tasks/{id}/done(id=${task.getId})}" class="white-box clickable btn_green btn_add">Done</a>
+            <a th:if="${task.isDone()}" th:href="@{/tasks/{id}/done(id=${task.getId})}" class="white-box clickable btn_yellow btn_add">Undone</a>
         </div>
     </main>
     <footer th:replace="templates/inner_pages :: footer"></footer>

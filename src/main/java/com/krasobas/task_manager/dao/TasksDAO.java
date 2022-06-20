@@ -6,14 +6,14 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class MemDAO implements DAO {
+public class TasksDAO implements oldDAO {
     private List<Task> tasks;
 
-    public MemDAO(List<Task> tasks) {
+    public TasksDAO(List<Task> tasks) {
         this.tasks = tasks;
     }
 
-    public MemDAO() {
+    public TasksDAO() {
         tasks = new LinkedList<>();
     }
 
@@ -31,11 +31,10 @@ public class MemDAO implements DAO {
 
     @Override
     public Task showPrevious(int id) {
-        Task current = show(id);
         Task previous = null;
         ListIterator<Task> iterator = tasks.listIterator();
         while (iterator.hasNext()) {
-            if (current.equals(iterator.next())) {
+            if (id == iterator.next().getId()) {
                 iterator.previous();
                 if (iterator.hasPrevious()) {
                     previous = iterator.previous();
@@ -48,11 +47,10 @@ public class MemDAO implements DAO {
 
     @Override
     public Task showNext(int id) {
-        Task current = show(id);
         Task next = null;
         ListIterator<Task> iterator = tasks.listIterator();
         while (iterator.hasNext()) {
-            if (current.equals(iterator.next())) {
+            if (id == iterator.next().getId()) {
                 if (iterator.hasNext()) {
                     next = iterator.next();
                 }
@@ -60,11 +58,6 @@ public class MemDAO implements DAO {
             }
         }
         return next;
-    }
-
-    @Override
-    public List<Task> findByName(String key) {
-        return null;
     }
 
     @Override

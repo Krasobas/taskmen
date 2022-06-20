@@ -8,9 +8,9 @@
     <header th:replace="templates/inner_pages :: header"></header>
     <main class="page">
         <div class="container">
-            <div th:classappend="${task.isStatus} ? status_done : ''" class="white-box clickable" th:each="task : ${tasks}">
-                <span class="task_created" th:text="${task.getCreated()}">date</span>
-                <a th:classappend="${task.isStatus} ? fa-square-check : fa-square" th:href="@{/tasks/{id}/done(id=${task.getId})}" class="icons fa-regular done_icon"></a>
+            <div th:classappend="${task.done} ? status_done : ''" class="white-box clickable" th:each="task : ${tasks}">
+                <span class="task_created" th:text="${task.getCreatedAsString()}">date</span>
+                <a th:classappend="${task.done} ? fa-square-check : fa-square" th:href="@{/tasks/{id}/done(id=${task.getId})}" class="icons fa-regular done_icon"></a>
                 <a th:href="@{/tasks/{id}(id=${task.getId()})}"
                    th:text="${task.title}">user</a>
                 <span class="dots-menu_icon icons fa-solid fa-ellipsis"></span>

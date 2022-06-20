@@ -1,25 +1,36 @@
 package com.krasobas.task_manager.dao;
 
 import com.krasobas.task_manager.models.Task;
+import com.krasobas.task_manager.models.User;
+
 import java.util.List;
 
 public interface DAO {
 
-    void delete(int id);
+    boolean checkLogin(String login);
 
-    List<Task> showAll();
+    boolean checkPassword(String login,String password);
 
-    List<Task> findByName(String key);
+    User getUser(String login, String password);
 
-    Task show(int id);
+    User addUser(String login, String password);
 
-    void save(Task task);
+    boolean deleteUser(int userId);
 
-    void update(int id, Task task);
+    List<Task> tasksList(int userId);
 
-    Task showPrevious(int id);
+    Task showTask(int userId, int taskId);
 
-    Task showNext(int id);
+    void saveTask(int userId, Task task);
 
-    void updateStatus(int id);
+    void updateTask(int userId, int taskId, Task task);
+
+    Task previousTask(int userId, int taskId);
+
+    Task nextTask(int userId, int taskId);
+
+    boolean updateTaskStatus(int userId, int taskId);
+
+    boolean deleteTask(int userId, int taskId);
+
 }

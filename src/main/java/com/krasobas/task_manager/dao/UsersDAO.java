@@ -11,10 +11,10 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class UserDAO {
+public class UsersDAO {
     private static Map<String, User> USERS = new HashMap<>();
 
-    public UserDAO() {
+    public UsersDAO() {
         testInit();
     }
 
@@ -42,8 +42,8 @@ public class UserDAO {
 
 
         // add test tasks into test user task list
-        user1.setTasks(new MemDAO(tasks));
-        user2.setTasks(new MemDAO(tasks2));
+        user1.setTasks(new TasksDAO(tasks));
+        user2.setTasks(new TasksDAO(tasks2));
         USERS.put(user1.getLogin(), user1);
         USERS.put(user2.getLogin(), user2);
     }

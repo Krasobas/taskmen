@@ -1,6 +1,6 @@
 package com.krasobas.task_manager.controllers;
 
-import com.krasobas.task_manager.dao.UserDAO;
+import com.krasobas.task_manager.dao.UsersDAO;
 import com.krasobas.task_manager.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +14,10 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/users")
 public class UsersController {
-    private UserDAO users;
+    private UsersDAO users;
 
     @Autowired
-    public UsersController(UserDAO users) {
+    public UsersController(UsersDAO users) {
         this.users = users;
     }
 

@@ -1,7 +1,5 @@
 package com.krasobas.task_manager.controllers;
 
-import com.krasobas.task_manager.dao.DAO;
-import com.krasobas.task_manager.dao.UserDAO;
 import com.krasobas.task_manager.models.Task;
 import com.krasobas.task_manager.models.User;
 import org.springframework.stereotype.Controller;
