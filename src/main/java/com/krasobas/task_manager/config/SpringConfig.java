@@ -28,14 +28,14 @@ public class SpringConfig implements WebMvcConfigurer {
 
     private final ApplicationContext applicationContext;
 
-    @Value("${postgresql.driver-class-name}")
-    String driver;
+//    @Value("${postgresql.driver-class-name}")
+//    String driver;
     @Value("${postgresql.url}")
     String url;
-    @Value("${postgresql.username}")
-    String username;
-    @Value("${postgresql.password}")
-    String password;
+//    @Value("${postgresql.username}")
+//    String username;
+//    @Value("${postgresql.password}")
+//    String password;
 
     @Autowired
     public SpringConfig(ApplicationContext applicationContext) {
@@ -97,11 +97,11 @@ public class SpringConfig implements WebMvcConfigurer {
     public Connection jdbcConnection() {
         Connection db = null;
         try {
-            Class.forName("org.postgresql.Driver");
+//            Class.forName("org.postgresql.Driver");
 //            db = DriverManager.getConnection(url, username, password);
             db = DriverManager.getConnection(url);
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return db;
