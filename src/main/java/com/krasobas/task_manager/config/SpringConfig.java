@@ -85,7 +85,7 @@ public class SpringConfig implements WebMvcConfigurer {
     @Bean
     public Connection jdbcConnection() {
         Connection db = null;
-        try (InputStream in = CloudTaskDAO.class.getClassLoader().getResourceAsStream("app.properties")) {
+        try (InputStream in = CloudTaskDAO.class.getClassLoader().getResourceAsStream("application.properties")) {
             Properties config = new Properties();
             config.load(in);
             Class.forName(config.getProperty("postgresql.driver-class-name"));
