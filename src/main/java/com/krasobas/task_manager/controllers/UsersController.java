@@ -24,6 +24,9 @@ public class UsersController {
     @GetMapping("/demo")
     public String demo(HttpSession httpSession) {
         User demo = userDAO.getUser("demo", "demo");
+        if (demo == null) {
+            demo = userDAO.addUser("demo", "demo");
+        }
         demo.setStatus(true);
         httpSession.setAttribute("user", demo);
         return "redirect:/tasks";
